@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {Link} from 'react-router-dom'
 import '../Login/Login';
 
-function Regist() {
+const Regist:React.FC = () => {
 
-    const [loginValue, setLoginValue] = useState('');
-    const [passValue, setPassValue] = useState('');
+    const [loginValue, setLoginValue] = useState<string>('');
+    const [passValue, setPassValue] = useState<string>('');
 
-    const submitForm = (e: any) => {
+    const submitForm = (e: React.FormEvent<HTMLFormElement>):void => {
         e.preventDefault();
 
         const formData = {
@@ -25,6 +25,16 @@ function Regist() {
         }
     }
 
+    const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
+        const {target: {value: loginValue}} = e;
+        setLoginValue(loginValue)
+    }
+
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
+        const {target: {value: passValue}} = e;
+        setPassValue(passValue)
+    }
+
   return (
     <div>
         <form 
@@ -37,14 +47,14 @@ function Regist() {
                 type='text'
                 placeholder='Логин'
                 value={loginValue}
-                onChange={(e)  => setLoginValue(e.target.value)}
+                onChange={handleLoginChange}
             />
             <input
                 className='form__input'
                 type='password'
                 placeholder='Пароль'
                 value={passValue}
-                onChange={(e)  => setPassValue(e.target.value)}
+                onChange={handlePasswordChange}
             />
             <button
                 className='form__btn'

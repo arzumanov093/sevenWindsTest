@@ -4,16 +4,17 @@ import {Link} from 'react-router-dom'
 import { RootState } from '../../store';
 import './Login.css';
 
-function Login() {
+const Login:React.FC = () => {
 
-    const [loginValue, setLoginValue] = useState('');
-    const [passValue, setPassValue] = useState('');
+    const [loginValue, setLoginValue] = useState<string>('');
+    const [passValue, setPassValue] = useState<string>('');
 
     const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector
     const {isAuth} = useTypedSelector(state => state.authReducer)
     const dispatch = useDispatch();
+    
 
-    const submitForm = (e: any) => {
+    const submitForm = (e: React.FormEvent<HTMLFormElement>):void => {
         e.preventDefault();
 
         const {login, password} = JSON.parse(localStorage.getItem('formData') || '{}');
@@ -26,12 +27,23 @@ function Login() {
             console.log('success login', localStorage.getItem('formData'));
             setLoginValue('');
             setPassValue('');
+            
             dispatch({
                 type: 'AUTH',
                 payload: true
             })
-            
+            console.log('login', isAuth)
         }
+    }
+
+    const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
+        const {target: {value: loginValue}} = e;
+        setLoginValue(loginValue)
+    }
+
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
+        const {target: {value: passValue}} = e;
+        setPassValue(passValue)
     }
 
   return (
@@ -47,7 +59,7 @@ function Login() {
                 type='text'
                 placeholder='Логин'
                 value={loginValue}
-                onChange={(e) => setLoginValue(e.target.value)}
+                onChange={handleLoginChange}
             />
             <input
                 name='password'
@@ -55,7 +67,7 @@ function Login() {
                 type='password'
                 placeholder='Пароль'
                 value={passValue}
-                onChange={(e) => setPassValue(e.target.value)}
+                onChange={handlePasswordChange}
             />
             <button
                 className='form__btn'

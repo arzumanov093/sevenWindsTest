@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import { RootState } from '../../store';
