@@ -21,7 +21,7 @@ const Todo:React.FC = () => {
 
     return(
         <div>
-            Todo List! <br/>
+            Todo List <br/>
             <button
                 onClick={exit}
             >
